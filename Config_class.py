@@ -1,6 +1,10 @@
+import importlib.util
+
 class Config(object):
 	def __init__(self,path):
-		mod = __import__(path)
+		spec = importlib.util.spec_from_file_location("module.name", path)
+		mod = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(mod)
 		self.blur_kernel_size = mod.blur_kernel_size
 		self.threshold_type = mod.threshold_type
 		self.threshold_argument = mod.threshold_argument

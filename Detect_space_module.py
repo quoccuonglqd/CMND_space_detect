@@ -3,6 +3,7 @@ import numpy as np
 from os import listdir
 import os.path as osp
 import argparse
+import time
 
 THRESHOLD_VALUES = ['adaptive_mean','adaptive_gaussian','normal']
 CONTOUR_MODE_VALUES = {'external':cv2.RETR_EXTERNAL,
@@ -75,6 +76,7 @@ def Eroded_detect(image,mode,method,size,number_iterations,x_ratio,y_ratio):
 	    return min(ls)
 
 def Process(path,cfg):
+	start_time = time.time()
 	image = cv2.imread(path)
 	thresh = Convert_to_binary(image,cfg.blur_kernel_size,cfg.threshold_type,cfg.threshold_argument)
 	image_,res = Non_eroded_process(thresh,cfg.mode[0],cfg.method[0],cfg.x_ratio,cfg.y_ratio)
@@ -85,6 +87,7 @@ def Process(path,cfg):
 		cv2.waitKey(0)
 		return
 	res = Eroded_detect(image_,cfg.mode[1],cfg.method[1],cfg.erode_kernel_size,cfg.number_iterations,cfg.x_ratio,cfg.y_ratio)
+	print(time.time()-start_time)
 	if (res!=None):
 		img = image
 		cv2.line(img, (res,0), (res,img.shape[0]), (255,255,0), thickness=4, lineType=8, shift=0)
