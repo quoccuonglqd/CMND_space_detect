@@ -1,0 +1,9 @@
+blur_kernel_size = 11
+threshold_type = 'adaptive_mean'
+threshold_argument = (19,9)
+mode = ('list','external')
+method = ('none','none')
+erode_kernel_size = 3
+number_iterations = 2
+x_ratio = 0.5
+y_ratio = 0.1
