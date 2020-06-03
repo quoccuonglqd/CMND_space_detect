@@ -14,3 +14,4 @@ class Config(object):
 		self.number_iterations = mod.number_iterations
 		self.x_ratio = mod.x_ratio
 		self.y_ratio = mod.y_ratio
+		self.contour_limit = mod.contour_limit

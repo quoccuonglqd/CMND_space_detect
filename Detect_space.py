@@ -1,5 +1,4 @@
 from Detect_space_module import * 
-from Config_class import Config
 import argparse
 
 if __name__ == "__main__":
@@ -13,9 +12,8 @@ if __name__ == "__main__":
 	if args.mode not in ['single','multiple']:
 		sys.exit()
 	elif args.mode == 'single':
-
-		Process(args.image_path,cfg)
+		Process_in_single_cfg(args.image_path,cfg,True)
 	else:
 		for name in listdir(args.folder_path):
 			path = osp.join(args.folder_path,name)
-			Process(path,cfg)
+			Process_in_single_cfg(path,cfg,True)

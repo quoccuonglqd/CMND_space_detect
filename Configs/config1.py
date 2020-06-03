@@ -7,3 +7,4 @@ erode_kernel_size = 3
 number_iterations = 2
 x_ratio = 0.5
 y_ratio = 0.1
+contour_limit = 10

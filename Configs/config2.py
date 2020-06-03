@@ -1,0 +1,10 @@
+blur_kernel_size = 9
+threshold_type = 'normal'
+threshold_argument = 55
+mode = ('list','external')
+method = ('none','none')
+erode_kernel_size = 3
+number_iterations = 5
+x_ratio = 0.5
+y_ratio = 0.2
+contour_limit = 4
