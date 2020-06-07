@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 import argparse
-from Detect_space_module import * 
+import cv2
+from detect_space_module import * 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -14,8 +15,10 @@ if __name__ == "__main__":
     if args.mode not in ['single','multiple']:
         sys.exit()
     elif args.mode == 'single':
-        process_in_single_cfg(args.image_path, cfg, True)
+        image = cv2.imread(args.image_path)
+        process_in_single_cfg(image, cfg, True)
     else:
         for name in listdir(args.folder_path):
             path = osp.join(args.folder_path, name)
-            process_in_single_cfg(path, cfg, True)
+            image = cv2.imread(path)
+            process_in_single_cfg(image, cfg, True)

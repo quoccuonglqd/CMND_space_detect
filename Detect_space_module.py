@@ -5,7 +5,7 @@ import argparse
 import time
 import numpy as np
 import cv2 
-from Config_class import Config
+from config_class import Config
 
 THRESHOLD_VALUES = ['adaptive_mean','adaptive_gaussian','normal']
 CONTOUR_MODE_VALUES = {'external':cv2.RETR_EXTERNAL,
@@ -139,7 +139,7 @@ def eroded_detect(image, mode, method, size, number_iterations, x_ratio,
     else:
         return min(ls)
 
-def process_in_single_cfg(path, cfg, is_visualize = False):
+def process_in_single_cfg(image, cfg, is_visualize = False):
     r"""Full process in single config
         Args:
             path:str, path to a single image
@@ -147,7 +147,6 @@ def process_in_single_cfg(path, cfg, is_visualize = False):
             is_visualize:Boolen,whether or not visualization
     """
 
-    image = cv2.imread(path)
     thresh = convert_to_binary(image, cfg.blur_kernel_size, cfg.threshold_type,
         cfg.threshold_argument)
     image_,res = non_eroded_process(thresh, cfg.mode[0], cfg.method[0],
@@ -175,7 +174,7 @@ def process_in_single_cfg(path, cfg, is_visualize = False):
             cv2.waitKey(0)
         return res
 
-def process_in_multiple_cfg(path, cfg_ls=['Configs/config1.py',
+def process_in_multiple_cfg(image, cfg_ls=['Configs/config1.py',
     'Configs/config2.py','Configs/config3.py'], is_visualize=False):
     r"""Full process in multiple config
         Args:
@@ -187,16 +186,15 @@ def process_in_multiple_cfg(path, cfg_ls=['Configs/config1.py',
     ls = []
     for cfg in cfg_ls:
         cfg = Config(cfg)
-        res = process_in_single_cfg(path, cfg)
+        res = process_in_single_cfg(image, cfg)
         if res != None:
             ls.append(res)
     
     if len(ls)>0:
         if is_visualize == True:
-            img = cv2.imread(path)
-            cv2.line(img, (int(sum(ls)/len(ls)),0), (int(sum(ls)/len(ls)),
-                img.shape[0]), (255,255,0), thickness=4, lineType=8, shift=0)
-            cv2.imshow('result', img)
+            cv2.line(image, (int(sum(ls)/len(ls)),0), (int(sum(ls)/len(ls)),
+                image.shape[0]), (255,255,0), thickness=4, lineType=8, shift=0)
+            cv2.imshow('result', image)
             cv2.waitKey(0)
         return int(sum(ls)/len(ls))
     else:
